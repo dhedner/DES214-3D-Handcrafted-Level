@@ -2,34 +2,37 @@
 
 [ext_resource type="Script" path="res://Player.gd" id="1_r287l"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grftx"]
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7adgh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ll0yo"]
 size = Vector3(0.4, 0.2, 0.4)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grftx"]
-
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 2
 script = ExtResource("1_r287l")
-
-[node name="Rig" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_7adgh")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Rig/MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.403515, -0.496062)
-mesh = SubResource("BoxMesh_ll0yo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_grftx")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="."]
+[node name="PlayerRig" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_7adgh")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerRig/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, -0.5)
+mesh = SubResource("BoxMesh_ll0yo")
+
+[node name="CameraRig" type="Node3D" parent="."]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 spring_length = 5.0
 margin = 0.1
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
